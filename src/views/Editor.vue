@@ -6,9 +6,8 @@
     </v-tabs>
     <v-layout class="white editor-wrapper" row wrap>
       <v-flex>
-        <div id="editor" ref="editor">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo in nam
-          nostrum nulla dolores accusantium quod expedita a voluptatem maxime.
+        <div id="editor" ref="editor" v-html="articleHtml">
+          <!-- {{ articleHtml }} -->
         </div>
       </v-flex>
     </v-layout>
@@ -20,6 +19,11 @@ import Vue from 'vue'
 import Quill from 'quill'
 
 import { parseArticle } from '../utils/parse-article.util'
+import { articleService, articleSourceCode } from '../services/article.service'
+
+const doc = new DOMParser().parseFromString(articleSourceCode, 'text/html')
+const tags = doc.querySelectorAll('p')
+console.log('TCL: tags', tags)
 
 // console.log('TCL: Quill', Quill)
 
@@ -32,20 +36,17 @@ export default Vue.extend({
   },
   data: function() {
     return {
-      editor: {} as Quill
+      editor: {} as Quill,
+      articleHtml: ''
     }
   },
 
   components: {},
   created() {
-    console.log('editor articleUrl', this.articleUrl)
-    parseArticle(this.articleUrl).then(res => {
-      console.log('TCL: created -> res', res)
-    })
+    this.articleHtml = articleSourceCode
   },
   mounted() {
     const that: any = this
-
     this.editor = new Quill(that.$refs.editor, {
       theme: 'snow'
     })

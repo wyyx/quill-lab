@@ -22,7 +22,8 @@ import Vue from 'vue'
 export default Vue.extend({
   data: function() {
     return {
-      articleUrl: 'https://a.sendbp.com/redui/article/193028/4a39859aba09'
+      articleUrl:
+        'https://www.oschina.net/news/106799/the-struggles-of-an-open-source-maintainer'
     }
   },
   created() {},
